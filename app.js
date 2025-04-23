@@ -48,13 +48,11 @@ const questionNo = document.querySelector(".current-question");
 
 let currentQuestion = 0;
 let score = 0;
-// let isButtonClicked = false;
 
 function loadQuiz() {
   const { question, options } = quizData[currentQuestion];
 
   questionElm.innerText = `${currentQuestion + 1}: ${question}`;
-  //   scores.innerText = `${score}/${quizData.length}`;
 
   options.forEach((curOption, index) => {
     window[`option_${index + 1}`].innerText = curOption;
@@ -105,6 +103,10 @@ function checkAnswer() {
   }
 }
 
+function optionNotSelectedOnTimerEnd() {
+  questionResult.innerText = "Time Out";
+}
+
 // shows the current and total no. of questions
 function checkQuestionNo() {
   questionNo.innerText = `${currentQuestion + 1} of ${
@@ -128,15 +130,11 @@ function timerFormat(time) {
 
 function changeQuestionOnTimerEndOrOnBtnClick(isButtonClicked) {
   if (time === 0 || isButtonClicked) {
-    // clearInterval(timeInterval);
-    // currentQuestion++;
-    // loadQuiz();
-    // checkQuestionNo();
-    // time = 15;
-    // timer.innerText = timerFormat(time);
-    // timeInterval = 0;
-    // startTimer();
-    loadNextQuestion();
+    clearInterval(timeInterval);
+    checkAnswer();
+    setTimeout(() => {
+      loadNextQuestion();
+    }, 1000);
     return;
   }
   time = time - 1;
@@ -146,62 +144,26 @@ function changeQuestionOnTimerEndOrOnBtnClick(isButtonClicked) {
 function startTimer() {
   timeInterval = setInterval(changeQuestionOnTimerEndOrOnBtnClick, 1000);
 }
-startTimer();
+
+// startTimer();
 
 function loadNextQuestion() {
-  // checkAnswer();
-  // deselectedAnswers();
-  // setTimeout(() => {
-  //   if (currentQuestion < quizData.length - 1) {
-  //     questionResult.innerText = "";
-  //     changeQuestionOnTimerEndOrOnBtnClick(true);
-  //   } else {
-  //     showResult();
-  //   }
-  // }, 1000);
-  clearInterval(timeInterval);
-  currentQuestion++;
-  loadQuiz();
-  checkQuestionNo();
-  submitBtn.innerText =
-    currentQuestion < quizData.length - 1 ? `Next Ques` : `Submit`;
-  time = 15;
-  timer.innerText = timerFormat(time);
-  timeInterval = 0;
-  startTimer();
+  if (currentQuestion < quizData.length) {
+    deselectedAnswers();
+    questionResult.innerText = "";
+    loadQuiz();
+    checkQuestionNo();
+    submitBtn.innerText =
+      currentQuestion < quizData.length - 1 ? `Next Ques` : `Submit`;
+    time = 15;
+    timer.innerText = timerFormat(time);
+    startTimer();
+  } else {
+    showResult();
+  }
 }
 
 // button click
 submitBtn.addEventListener("click", () => {
-  // checkAnswer();
-
-  // submitBtn.innerText =
-  //   currentQuestion < quizData.length - 1 ? `Next Ques` : `Submit`;
-
-  // loadNextQuestion();
-  // if (currentQuestion < quizData.length) {
-  //   deselectedAnswers();
-  //   setTimeout(() => {
-  //     loadQuiz();
-  //     questionResult.innerText = "";
-  //     clearInterval(timeInterval);
-  //     startTimer();
-  //     checkQuestionNo();
-  //   }, 1000);
-  // } else {
-  //   setTimeout(() => {
-  //     showResult();
-  //   }, 1000);
-  // }
-
-  checkAnswer();
-  deselectedAnswers();
-  setTimeout(() => {
-    if (currentQuestion < quizData.length) {
-      questionResult.innerText = "";
-      changeQuestionOnTimerEndOrOnBtnClick(true);
-    } else {
-      showResult();
-    }
-  }, 1000);
+  changeQuestionOnTimerEndOrOnBtnClick(true);
 });
