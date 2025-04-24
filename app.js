@@ -36,7 +36,6 @@
 
 const quiz = document.querySelector("#quiz");
 const timer = document.querySelector("#clock");
-// const scores = document.querySelector("#score");
 const answerElm = document.querySelectorAll(".answer");
 const [questionElm, option_1, option_2, option_3, option_4] =
   document.querySelectorAll(
@@ -88,18 +87,13 @@ function showResult() {
 // check that the answer selected by the user is correct or incorrect.
 function checkAnswer() {
   const selectedOptionIndex = getSelectedOption();
-  if (selectedOptionIndex >= 0) {
-    if (selectedOptionIndex === quizData[currentQuestion].correct) {
-      score = score + 1;
-      questionResult.innerText = `Your Answer is correct`;
-    } else {
-      questionResult.innerText = `Your Answer is wrong | The correct answer is ${
-        quizData[currentQuestion].options[quizData[currentQuestion].correct]
-      }`;
-    }
-    currentQuestion++;
+  if (selectedOptionIndex === quizData[currentQuestion].correct) {
+    score = score + 1;
+    questionResult.innerText = `Your Answer is correct`;
   } else {
-    questionResult.innerText = "Please select an answer";
+    questionResult.innerText = `Your Answer is wrong | The correct answer is ${
+      quizData[currentQuestion].options[quizData[currentQuestion].correct]
+    }`;
   }
 }
 
@@ -128,13 +122,39 @@ function timerFormat(time) {
   return time;
 }
 
-function changeQuestionOnTimerEndOrOnBtnClick(isButtonClicked) {
-  if (time === 0 || isButtonClicked) {
+function changeQuestionOnTimerEnd() {
+  if (time === 0) {
+    const selectedOptionIndex = getSelectedOption();
+    selectedOptionIndex === undefined
+      ? optionNotSelectedOnTimerEnd()
+      : checkAnswer();
+    currentQuestion++;
     clearInterval(timeInterval);
-    checkAnswer();
     setTimeout(() => {
       loadNextQuestion();
     }, 1000);
+  }
+}
+
+function changeQuestionOnBtnClick() {
+  const selectedOptionIndex = getSelectedOption();
+  if (selectedOptionIndex === undefined) {
+    questionResult.innerText = "Please select an answer";
+    return;
+  }
+  checkAnswer();
+  currentQuestion++;
+  clearInterval(timeInterval);
+  setTimeout(() => {
+    loadNextQuestion();
+  }, 1000);
+}
+
+function changeQuestionOnTimerEndOrOnBtnClick(isButtonClicked = false) {
+  if (time === 0 || isButtonClicked) {
+    isButtonClicked === true
+      ? changeQuestionOnBtnClick()
+      : changeQuestionOnTimerEnd();
     return;
   }
   time = time - 1;
@@ -145,7 +165,7 @@ function startTimer() {
   timeInterval = setInterval(changeQuestionOnTimerEndOrOnBtnClick, 1000);
 }
 
-// startTimer();
+startTimer();
 
 function loadNextQuestion() {
   if (currentQuestion < quizData.length) {
