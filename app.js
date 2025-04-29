@@ -34,7 +34,7 @@
   },
 ];
 
-const quiz = document.querySelector("#quiz");
+const quiz = document.querySelector(".quiz-card");
 const timer = document.querySelector("#clock");
 const answerElm = document.querySelectorAll(".answer");
 const [questionElm, option_1, option_2, option_3, option_4] =
