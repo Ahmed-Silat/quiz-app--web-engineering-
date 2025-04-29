@@ -76,12 +76,18 @@ function deselectedAnswers() {
 
 // Display the final score of the user on a new screen.
 function showResult() {
-  quiz.innerHTML = `
-                <div class="result">
-                <h2>Your Score: ${score}/${quizData.length} correct Answers</h2>
-                <p>Congractulations on completing the quiz!</p>
-                <button class="reloadBtn" onclick="location.reload()">Play Again</button>
-                </div>`;
+  quiz.innerHTML = `<div class="result">
+    <h2>🎉 Well Done!</h2>
+    <p>You scored <span class="highlight">${score}</span> out of <span class="highlight">${
+    quizData.length
+  }</span>!</p>
+    <p class="message">${
+      score === quizData.length
+        ? "Perfect score! You nailed it! 💯"
+        : "Keep it up! Try again to improve your score. 💪"
+    }</p>
+    <button class="reloadBtn" onclick="location.reload()">🔄 Try Again</button>
+  </div>`;
 }
 
 // check that the answer selected by the user is correct or incorrect.
@@ -90,15 +96,20 @@ function checkAnswer() {
   if (selectedOptionIndex === quizData[currentQuestion].correct) {
     score = score + 1;
     questionResult.innerText = `Your Answer is correct`;
+    questionResult.style.color = "rgba(83, 232, 83, 0.8)";
   } else {
-    questionResult.innerText = `Your Answer is wrong | The correct answer is ${
+    questionResult.innerHTML = `<span style="color: red;">Your Answer is wrong</span> |
+    <span style="color: orange;">The correct answer is:</span>
+    <span id="correct-answer" style="color: rgba(83, 232, 83, 0.8);"></span>`;
+    document.getElementById("correct-answer").innerText = `${
       quizData[currentQuestion].options[quizData[currentQuestion].correct]
     }`;
   }
 }
 
 function optionNotSelectedOnTimerEnd() {
-  questionResult.innerText = "Time Out";
+  questionResult.innerText = "Time Out!";
+  questionResult.style.color = "rgb(198, 139, 28)";
 }
 
 // shows the current and total no. of questions
@@ -132,7 +143,7 @@ function changeQuestionOnTimerEnd() {
     clearInterval(timeInterval);
     setTimeout(() => {
       loadNextQuestion();
-    }, 1000);
+    }, 1500);
   }
 }
 
@@ -140,6 +151,7 @@ function changeQuestionOnBtnClick() {
   const selectedOptionIndex = getSelectedOption();
   if (selectedOptionIndex === undefined) {
     questionResult.innerText = "Please select an answer";
+    questionResult.style.color = "red";
     return;
   }
   checkAnswer();
@@ -147,7 +159,7 @@ function changeQuestionOnBtnClick() {
   clearInterval(timeInterval);
   setTimeout(() => {
     loadNextQuestion();
-  }, 1000);
+  }, 1500);
 }
 
 function changeQuestionOnTimerEndOrOnBtnClick(isButtonClicked = false) {

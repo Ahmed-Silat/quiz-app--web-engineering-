@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #1e3c72, #2a5298);
   color: #fff;
   min-height: 100vh;
@@ -134,4 +134,65 @@ body {
 
 .next-button:hover {
   background-color: #fdd835;
+}
+
+.result {
+  background: linear-gradient(to right, #fdfbfb, #ebedee);
+  border: 2px solid #4caf50;
+  padding: 30px;
+  margin-top: 40px;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  font-family: "Segoe UI", sans-serif;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.result h2 {
+  color: #2e7d32;
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.result p {
+  color: #555;
+}
+
+.result .highlight {
+  color: #d84315;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.result .message {
+  color: #555;
+  font-style: italic;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.reloadBtn {
+  background: linear-gradient(to right, #66bb6a, #43a047);
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.reloadBtn:hover {
+  background: linear-gradient(to right, #43a047, #388e3c);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
