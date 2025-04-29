@@ -1,58 +1,53 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quiz App</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="quiz-section">
-      <div id="quiz">
-        <div class="question-timer">
-          <div class="quiz-question">
-            <p id="question">quiz question</p>
+    <main class="quiz-container">
+      <section class="quiz-card">
+        <header class="quiz-header">
+          <h1 class="quiz-title">Quiz Time!</h1>
+          <div class="timer">
+            <span class="timer-label">Time Left:</span>
+            <span id="clock" class="timer-count"></span>
           </div>
-          <div id="timer">
-            <div id="text-clock">
-              <div id="text">Time Left</div>
-              <div id="clock">00</div>
-            </div>
-          </div>
-        </div>
-        <hr />
+        </header>
 
-        <div class="options">
-          <input type="radio" name="answer" class="answer" id="a" />
-          <label for="a" id="option_1"></label>
-        </div>
-
-        <div class="options">
-          <input type="radio" name="answer" class="answer" id="b" />
-          <label for="b" id="option_2"></label>
-        </div>
-
-        <div class="options">
-          <input type="radio" name="answer" class="answer" id="c" />
-          <label for="c" id="option_3"></label>
-        </div>
-
-        <div class="options">
-          <input type="radio" name="answer" class="answer" id="d" />
-          <label for="d" id="option_4"></label>
-        </div>
-
-        <hr />
-
-        <div id="questionResult"></div>
-
-        <div class="footer">
-          <div class="current-question"></div>
-          <div>
-            <button type="submit" id="submit">Next Ques</button>
+        <div class="quiz-body">
+          <p id="question" class="quiz-question">Question text</p>
+          <div class="quiz-options">
+            <label class="option">
+              <input type="radio" name="answer" class="answer" id="a" />
+              <span id="option_1"></span>
+            </label>
+            <label class="option">
+              <input type="radio" name="answer" class="answer" id="b" />
+              <span id="option_2"></span>
+            </label>
+            <label class="option">
+              <input type="radio" name="answer" class="answer" id="c" />
+              <span id="option_3"></span>
+            </label>
+            <label class="option">
+              <input type="radio" name="answer" class="answer" id="d" />
+              <span id="option_4"></span>
+            </label>
           </div>
         </div>
-      </div>
-    </div>
+
+        <footer class="quiz-footer">
+          <div id="questionResult" class="result-message"></div>
+          <div class="footer-controls">
+            <span class="question-number current-question"></span>
+            <button id="submit" class="next-button">Next</button>
+          </div>
+        </footer>
+      </section>
+    </main>
 
     <script src="app.js"></script>
   </body>
