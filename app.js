@@ -107,6 +107,18 @@ function checkAnswer() {
   }
 }
 
+// disable the answer options and next question button
+function disableRadioBtnsAndBtnClick() {
+  answerElm.forEach((rb) => (rb.disabled = true));
+  submitBtn.disabled = true;
+}
+
+// enable the answer options and next question button
+function enableRadioBtnsAndBtnClick() {
+  answerElm.forEach((rb) => (rb.disabled = false));
+  submitBtn.disabled = false;
+}
+
 function optionNotSelectedOnTimerEnd() {
   questionResult.innerText = "Time Out!";
   questionResult.style.color = "rgb(198, 139, 28)";
@@ -141,9 +153,11 @@ function changeQuestionOnTimerEnd() {
       : checkAnswer();
     currentQuestion++;
     clearInterval(timeInterval);
+    disableRadioBtnsAndBtnClick();
     setTimeout(() => {
       loadNextQuestion();
-    }, 1500);
+      enableRadioBtnsAndBtnClick();
+    }, 2000);
   }
 }
 
@@ -157,9 +171,11 @@ function changeQuestionOnBtnClick() {
   checkAnswer();
   currentQuestion++;
   clearInterval(timeInterval);
+  disableRadioBtnsAndBtnClick();
   setTimeout(() => {
     loadNextQuestion();
-  }, 1500);
+    enableRadioBtnsAndBtnClick();
+  }, 2000);
 }
 
 function changeQuestionOnTimerEndOrOnBtnClick(isButtonClicked = false) {
